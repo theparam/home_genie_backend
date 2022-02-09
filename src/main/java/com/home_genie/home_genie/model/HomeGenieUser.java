@@ -2,6 +2,7 @@ package com.home_genie.home_genie.model;
 
 import java.io.Serializable;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -33,6 +34,8 @@ public class HomeGenieUser implements Serializable {
 	private String bio;
 
 	private java.util.Date createdDate;
+
+    private Binary image;
 
 	public String getId() {
 		return id;
@@ -116,6 +119,14 @@ public class HomeGenieUser implements Serializable {
 
 	public void setCreatedDate(java.util.Date createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public Binary getImage() {
+		return image;
+	}
+
+	public void setImage(Binary image) {
+		this.image = image;
 	}
 
 }
