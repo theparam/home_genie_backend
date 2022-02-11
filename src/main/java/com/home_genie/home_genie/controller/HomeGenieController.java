@@ -27,7 +27,7 @@ public class HomeGenieController {
 
 	@SuppressWarnings("deprecation")
 	@PostMapping("/signup")
-	public String userSignup(@RequestBody HomeGenieUser homeGenieUser) throws Exception {
+	public ResponseEntity<HomeGenieUser> userSignup(@RequestBody HomeGenieUser homeGenieUser) throws Exception {
 		if(StringUtils.isEmpty(homeGenieUser.getEmail()) || StringUtils.isEmpty(homeGenieUser.getFirstName()) || StringUtils.isEmpty(homeGenieUser.getPassword())|| StringUtils.isEmpty(homeGenieUser.getPhoneNumber())) {
 			throw new Exception("Email, FirstName, PassWord Phone Number should not be blank");
 		}
@@ -35,17 +35,17 @@ public class HomeGenieController {
 	}
 
 	@PostMapping(value = "/upload-image/{id}" )
-	public String userSignup(@PathVariable(value = "id") String id,@RequestParam(value = "file",required = false) MultipartFile userImage) throws Exception {
+	public String uploadProfileImage(@PathVariable(value = "id") String id,@RequestParam(value = "file",required = false) MultipartFile userImage) throws Exception {
 		return homeGenieService.uploadProfileImage(id,userImage);
 	}
 
 	@PostMapping("/login")
-	public String UserLogin(@RequestBody HomeGenieUser homeGenieUser) {
+	public ResponseEntity<HomeGenieUser> UserLogin(@RequestBody HomeGenieUser homeGenieUser) {
 		return homeGenieService.loginUser(homeGenieUser);
 	}
 
 	@GetMapping(value = "/{id}")
-	public HomeGenieUser getUserById(@PathVariable("id") String id) {
+	public ResponseEntity<HomeGenieUser> getUserById(@PathVariable("id") String id) {
 
 		return homeGenieService.getUserById(id);
 	}

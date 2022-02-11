@@ -19,15 +19,15 @@ public class HomeGenieService {
 	@Autowired
 	private HomeGenieRepository homeGenieRepository;
 
-	public String signUp(HomeGenieUser homeGenieUser) {
-		homeGenieRepository.save(homeGenieUser);
-		return "created";
+	public ResponseEntity<HomeGenieUser> signUp(HomeGenieUser homeGenieUser) {
+	 	homeGenieUser = homeGenieRepository.save(homeGenieUser);
+		return ResponseEntity.ok(homeGenieUser);
 
 	}
 
-	public String loginUser(HomeGenieUser homeGenieUser) {
+	public ResponseEntity<HomeGenieUser> loginUser(HomeGenieUser homeGenieUser) {
 		homeGenieRepository.findByEmail(homeGenieUser.getEmail());
-		return "Fetch";
+		return ResponseEntity.ok(homeGenieUser);
 	}
 
 	public ResponseEntity<HomeGenieUser> UpdateUser(String id, HomeGenieUser homeGenieUser) {
@@ -46,12 +46,12 @@ public class HomeGenieService {
 
 	}
 	
-	public HomeGenieUser getUserById(String id) {
+	public ResponseEntity<HomeGenieUser> getUserById(String id) {
 		Optional<HomeGenieUser> user = homeGenieRepository.findById(id);
 		
 		if(user.isPresent())
 		{
-			return user.get();
+			return ResponseEntity.ok(user.get());
 		}
 		else
 			return null;
