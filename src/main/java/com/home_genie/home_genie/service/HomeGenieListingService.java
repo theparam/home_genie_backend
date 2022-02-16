@@ -1,5 +1,6 @@
 package com.home_genie.home_genie.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,19 +101,19 @@ public class HomeGenieListingService {
 		return "ok";
 	}
 
-//	public HomeGenieListings[] searchListing(String title, String category) {
-//		Query query = new Query();
-//		query.addCriteria(Criteria.where("title").is(title));
-//		query.addCriteria(Criteria.where("category").is(category));
+	public List<HomeGenieListings> searchListing(String title, String category) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("title").is(title));
+		query.addCriteria(Criteria.where("category").is(category));
 //		
 //	
 //
-//		List<ContextUnknown> result = mongoTemplate.find(query, ContextUnknown.class);
+		List<HomeGenieListings> result = mongoTemplate.find(query, HomeGenieListings.class);
 //		
 //		HomeGenieListings[] listings = homeGenieListingsRepository.findAll(query);
 //
-//		return listings;
+		return result;
 //
-//	}
+	}
 
 }

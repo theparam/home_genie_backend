@@ -25,10 +25,20 @@ public class HomeGenieService {
 
 	}
 
-	public ResponseEntity<HomeGenieUser> loginUser(HomeGenieUser homeGenieUser) {
-		homeGenieRepository.findByEmail(homeGenieUser.getEmail());
-		return ResponseEntity.ok(homeGenieUser);
-	}
+	public ResponseEntity<?> loginUser(HomeGenieUser homeGenieUser) {
+		
+		HomeGenieUser storedHomeGenieUser = homeGenieRepository.findByEmail(homeGenieUser.getEmail());
+		if(storedHomeGenieUser!=null) {
+			if (storedHomeGenieUser.getEmail().equals(homeGenieUser.getEmail()) && storedHomeGenieUser.getPassword().equals( homeGenieUser.getPassword())) {
+				return ResponseEntity.ok(homeGenieUser);
+			}
+			else {
+				return ResponseEntity.ok("Invalid User");
+			}
+		}
+		else {
+			return ResponseEntity.ok("Invalid User");
+		}	}
 
 	public ResponseEntity<HomeGenieUser> UpdateUser(String id, HomeGenieUser homeGenieUser) {
 		Optional<HomeGenieUser> User = homeGenieRepository.findById(id);

@@ -36,6 +36,8 @@ public class HomeGenieUser implements Serializable {
 	private java.util.Date createdDate;
 
     private Binary image;
+    
+    private boolean valid;
 
 	public String getId() {
 		return id;
@@ -127,6 +129,14 @@ public class HomeGenieUser implements Serializable {
 
 	public void setImage(Binary image) {
 		this.image = image;
+	}
+
+	public boolean getValid() {
+		return valid;
+	}
+
+	public void setValid(boolean valid) {
+		this.valid = valid;
 	}
 
 }

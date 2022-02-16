@@ -1,5 +1,7 @@
 package com.home_genie.home_genie.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,10 +73,10 @@ public class HomeGenieListingController {
 	
 //	Search all listing via specific category
 //	we need to use only one api depending a category is selected or not
-//	@GetMapping(value="/searchlisting/{title}/{category}")
-//	public HomeGenieListings[] searchListing(@PathVariable("tittle") String title, @PathVariable("category") String category)
-//	{
-////		return HomeGenieListingService.searchListing(title, category);
-//	}
+	@GetMapping(value="/searchlisting/{title}/{category}")
+	public List<HomeGenieListings> searchListing(@PathVariable String title, @PathVariable String category)
+	{
+		return homeGenieListingService.searchListing(title, category);
+	}
 
 }

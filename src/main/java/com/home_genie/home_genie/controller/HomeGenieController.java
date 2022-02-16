@@ -39,8 +39,11 @@ public class HomeGenieController {
 		return homeGenieService.uploadProfileImage(id,userImage);
 	}
 
-	@PostMapping("/login")
-	public ResponseEntity<HomeGenieUser> UserLogin(@RequestBody HomeGenieUser homeGenieUser) {
+	@GetMapping("/login")
+	public ResponseEntity<?> UserLogin(@RequestBody HomeGenieUser homeGenieUser) throws Exception {
+		if(StringUtils.isEmpty(homeGenieUser.getEmail()) || StringUtils.isEmpty(homeGenieUser.getPassword())) {
+			throw new Exception("Email, PassWord should not be blank");
+		}
 		return homeGenieService.loginUser(homeGenieUser);
 	}
 
