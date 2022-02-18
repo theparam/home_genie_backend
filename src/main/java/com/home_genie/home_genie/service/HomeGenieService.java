@@ -25,7 +25,7 @@ public class HomeGenieService {
 
 	}
 
-	public ResponseEntity<?> loginUser(HomeGenieUser homeGenieUser) {
+	public ResponseEntity<?> loginUser(HomeGenieUser homeGenieUser) throws Exception {
 		
 		HomeGenieUser storedHomeGenieUser = homeGenieRepository.findByEmail(homeGenieUser.getEmail());
 		if(storedHomeGenieUser!=null) {
@@ -33,11 +33,13 @@ public class HomeGenieService {
 				return ResponseEntity.ok(homeGenieUser);
 			}
 			else {
-				return ResponseEntity.ok("Invalid User");
+				homeGenieUser.setValid(false);
+				return ResponseEntity.ok("{\"message\":\"Invalid User\"}");
 			}
 		}
 		else {
-			return ResponseEntity.ok("Invalid User");
+			homeGenieUser.setValid(false);
+			return ResponseEntity.ok("{\"message\":\"Invalid User\"}");
 		}	}
 
 	public ResponseEntity<HomeGenieUser> UpdateUser(String id, HomeGenieUser homeGenieUser) {
