@@ -2,6 +2,7 @@ package com.home_genie.home_genie.model;
 
 import java.io.Serializable;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -37,6 +38,16 @@ public class HomeGenieListings implements Serializable {
 	private String biddingOffer;
 	
 	private Boolean isNotificationRead;
+	
+//	private Binary condition;
+
+	public String getImage() {
+		return condition;
+	}
+
+	public void setImage(String condition) {
+		this.condition = condition;
+	}
 
 	public String getTitle() {
 		return title;
@@ -62,13 +73,13 @@ public class HomeGenieListings implements Serializable {
 		this.category = category;
 	}
 
-	public String getCondition() {
-		return condition;
-	}
+//	public String getCondition() {
+//		return condition;
+//	}
 
-	public void setCondition(String condition) {
-		this.condition = condition;
-	}
+//	public void setCondition(String condition) {
+//		this.condition = condition;
+//	}
 	
 	public String getPrice() {
 		return price;

@@ -2,7 +2,10 @@ package com.home_genie.home_genie.controller;
 
 import java.util.List;
 
+import javax.mail.internet.ContentType;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.home_genie.home_genie.model.HomeGenieListings;
 import com.home_genie.home_genie.service.HomeGenieListingService;
@@ -23,9 +28,12 @@ public class HomeGenieListingController {
 	private HomeGenieListingService homeGenieListingService;
 
 //	This is used to when new listing is created
-	@PostMapping("/create")
-	public String createListing(@RequestBody HomeGenieListings listing) {
-		return homeGenieListingService.create(listing);
+	@PostMapping(value = "/create",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE} )
+	public String createListing(@RequestPart("file") MultipartFile file,
+			@RequestPart("homeGenieListings") HomeGenieListings homeGenieListings
+			) {
+		System.out.println(file);
+		return homeGenieListingService.create(homeGenieListings);
 	}
 
 //	Updating the Listing
