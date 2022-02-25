@@ -6,7 +6,10 @@ import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Document
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class HomeGenieListings implements Serializable {
 	
 	/**
@@ -23,7 +26,7 @@ public class HomeGenieListings implements Serializable {
 	
 	private String category;
 	
-	private String condition;
+//	private String condition;
 	
 	private String[] images;
 	
@@ -39,15 +42,7 @@ public class HomeGenieListings implements Serializable {
 	
 	private Boolean isNotificationRead;
 	
-//	private Binary condition;
-
-	public String getImage() {
-		return condition;
-	}
-
-	public void setImage(String condition) {
-		this.condition = condition;
-	}
+	private Binary image;
 
 	public String getTitle() {
 		return title;
@@ -73,14 +68,6 @@ public class HomeGenieListings implements Serializable {
 		this.category = category;
 	}
 
-//	public String getCondition() {
-//		return condition;
-//	}
-
-//	public void setCondition(String condition) {
-//		this.condition = condition;
-//	}
-	
 	public String getPrice() {
 		return price;
 	}
@@ -156,5 +143,21 @@ public class HomeGenieListings implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	public Binary getImage() {
+		return image;
+	}
+
+	public void setImage(Binary image) {
+		this.image = image;
+	}
+
+//	public String getCondition() {
+//		return condition;
+//	}
+
+//	public void setCondition(String condition) {
+//		this.condition = condition;
+//	}
 
 }

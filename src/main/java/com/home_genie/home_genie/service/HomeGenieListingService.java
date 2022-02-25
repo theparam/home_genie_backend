@@ -1,14 +1,19 @@
 package com.home_genie.home_genie.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.BsonBinarySubType;
+import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.home_genie.home_genie.model.HomeGenieListings;
 import com.home_genie.home_genie.repo.HomeGenieListingRepository;
@@ -21,10 +26,18 @@ public class HomeGenieListingService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
-	public String create(HomeGenieListings listing) {
-		homeGenieListingsRepository.save(listing);
-		return "created";
+	public ResponseEntity<?> create(HomeGenieListings listing,MultipartFile file) {
+		try {
+			listing.setImage(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
+		
 
+		homeGenieListingsRepository.save(listing);
+		return ResponseEntity.ok("{\"message\":\"List Added\"}");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public ResponseEntity<HomeGenieListings> UpdateListing(String id, HomeGenieListings homeGenieUser) {
@@ -103,8 +116,10 @@ public class HomeGenieListingService {
 
 	public List<HomeGenieListings> searchListing(String title, String category) {
 		Query query = new Query();
-		query.addCriteria(Criteria.where("title").is(title));
-		query.addCriteria(Criteria.where("category").is(category));
+		if(!StringUtils.isEmpty(title)&& title!=null)
+		query.addCriteria(Criteria.where("title").regex(title,"i"));
+		if(!StringUtils.isEmpty(category) && category!=null)
+		query.addCriteria(Criteria.where("category").regex(category,"i"));
 //		
 //	
 //

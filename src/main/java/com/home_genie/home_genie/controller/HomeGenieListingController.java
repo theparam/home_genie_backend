@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.home_genie.home_genie.model.HomeGenieListings;
 import com.home_genie.home_genie.service.HomeGenieListingService;
 
@@ -29,11 +33,19 @@ public class HomeGenieListingController {
 
 //	This is used to when new listing is created
 	@PostMapping(value = "/create",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE} )
-	public String createListing(@RequestPart("file") MultipartFile file,
-			@RequestPart("homeGenieListings") HomeGenieListings homeGenieListings
+	public ResponseEntity<?> createListing(@RequestParam("file") MultipartFile file,
+			@RequestParam("homeGenieListings") String jsonString
 			) {
-		System.out.println(file);
-		return homeGenieListingService.create(homeGenieListings);
+		HomeGenieListings homeGenieListings = new HomeGenieListings();
+		try {
+			homeGenieListings = new ObjectMapper().enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY).readValue(jsonString, HomeGenieListings.class);
+
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return homeGenieListingService.create(homeGenieListings,file);
+
 	}
 
 //	Updating the Listing
@@ -81,8 +93,8 @@ public class HomeGenieListingController {
 	
 //	Search all listing via specific category
 //	we need to use only one api depending a category is selected or not
-	@GetMapping(value="/searchlisting/{title}/{category}")
-	public List<HomeGenieListings> searchListing(@PathVariable String title, @PathVariable String category)
+	@GetMapping(value="/searchlisting/")
+	public List<HomeGenieListings> searchListing(@RequestParam(required = false) String title, @RequestParam(required = false) String category)
 	{
 		return homeGenieListingService.searchListing(title, category);
 	}
