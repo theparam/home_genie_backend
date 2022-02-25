@@ -6,12 +6,9 @@ import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @Document
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class HomeGenieListings implements Serializable {
-	
+
 	/**
 	 * 
 	 */
@@ -19,30 +16,42 @@ public class HomeGenieListings implements Serializable {
 
 	@Id
 	private String id;
-	
+
 	private String title;
-	
+
 	private String description;
-	
+
 	private String category;
-	
-//	private String condition;
-	
-	private String[] images;
-	
-	private String price;
-	
-	private String ownerUserId;
-	
-	private String bidderUserId;
-	
-	private Boolean isOfferAccepted;
-	
-	private String biddingOffer;
-	
-	private Boolean isNotificationRead;
-	
+
+	private String condition;
+
 	private Binary image;
+
+	private String price;
+
+	private String listingOwner;
+
+	private String contactNumber;
+
+	private String email;
+
+	private String address;
+
+	private String city;
+
+	private String province;
+
+	private String postalCode;
+
+	private String ownerUserId;
+
+	private String[] biddingOffers;
+
+	private String acceptedBiddingOffer;
+
+	private Boolean isOfferAccepted;
+
+	private Boolean isNotificationRead;
 
 	public String getTitle() {
 		return title;
@@ -68,6 +77,63 @@ public class HomeGenieListings implements Serializable {
 		this.category = category;
 	}
 
+	public String getListingOwner() {
+		return listingOwner;
+	}
+
+	public void setListingOwner(String listingOwner) {
+		this.listingOwner = listingOwner;
+	}
+
+	public String getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+//	province
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
 	public String getPrice() {
 		return price;
 	}
@@ -75,67 +141,48 @@ public class HomeGenieListings implements Serializable {
 	public void setPrice(String price) {
 		this.price = price;
 	}
+
 	
-	public String getBiddingOffer()
-	{
-		return biddingOffer;
-	}
-	
-	public void setBiddingOffer(String biddingOffer)
-	{
-		this.biddingOffer= biddingOffer;
-	}
-	
-	public String[] getImages()
-	{
-		return images;
-	}
-	
-	public void setImages(String[] images)
-	{
-		this.images= images;
-	}
-	
-	public Boolean getIsOfferAccepted()
-	{
+	public Boolean getIsOfferAccepted() {
 		return isOfferAccepted;
 	}
-	
-	public void setIsOfferAccepted(Boolean isOfferAccepted)
-	{
-		this.isOfferAccepted= isOfferAccepted;
+
+	public void setIsOfferAccepted(Boolean isOfferAccepted) {
+		this.isOfferAccepted = isOfferAccepted;
 	}
-	
-	public Boolean getIsNotificationRead()
-	{
+
+	public Boolean getIsNotificationRead() {
 		return isNotificationRead;
 	}
-	
-	public void setIsNotificationRead(Boolean isNotificationRead)
-	{
-		this.isNotificationRead= isNotificationRead;
+
+	public void setIsNotificationRead(Boolean isNotificationRead) {
+		this.isNotificationRead = isNotificationRead;
 	}
-	
-	public String getOwnerUserId()
-	{
+
+	public String getOwnerUserId() {
 		return ownerUserId;
 	}
-	
-	public void setOwnerUserId(String ownerUserId)
-	{
-		this.ownerUserId= ownerUserId;
+
+	public void setOwnerUserId(String ownerUserId) {
+		this.ownerUserId = ownerUserId;
 	}
-	
-	public String getBidderUserId()
-	{
-		return bidderUserId;
+
+	public String[] getBiddingOffers() {
+		return biddingOffers;
 	}
-	
-	public void setBidderUserId(String bidderUserId)
-	{
-		this.bidderUserId= bidderUserId;
+
+	public void setBiddingOffers(String[] biddingOffers) {
+		this.biddingOffers = biddingOffers;
 	}
-	
+
+	public String getAcceptedBiddingOffer() {
+		return acceptedBiddingOffer;
+	}
+
+	public void setAcceptedBiddingOffer(String acceptedBiddingOffer) {
+		this.acceptedBiddingOffer = acceptedBiddingOffer;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -152,12 +199,12 @@ public class HomeGenieListings implements Serializable {
 		this.image = image;
 	}
 
-//	public String getCondition() {
-//		return condition;
-//	}
+	public String getCondition() {
+		return condition;
+	}
 
-//	public void setCondition(String condition) {
-//		this.condition = condition;
-//	}
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
 
 }
