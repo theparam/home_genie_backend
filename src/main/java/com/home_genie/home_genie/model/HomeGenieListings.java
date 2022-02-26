@@ -29,6 +29,8 @@ public class HomeGenieListings implements Serializable {
 
 	private String price;
 
+	private String paymentOption;
+	
 	private String listingOwner;
 
 	private String contactNumber;
@@ -141,6 +143,14 @@ public class HomeGenieListings implements Serializable {
 	public void setPrice(String price) {
 		this.price = price;
 	}
+	public String getPaymentOption() {
+		return paymentOption;
+	}
+
+	public void setPaymentOption(String PaymentOption) {
+		this.paymentOption = PaymentOption;
+	}
+	
 
 	
 	public Boolean getIsOfferAccepted() {

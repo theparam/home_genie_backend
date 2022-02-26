@@ -30,7 +30,7 @@ public class HomeGenieService {
 		HomeGenieUser storedHomeGenieUser = homeGenieRepository.findByEmail(homeGenieUser.getEmail());
 		if(storedHomeGenieUser!=null) {
 			if (storedHomeGenieUser.getEmail().equals(homeGenieUser.getEmail()) && storedHomeGenieUser.getPassword().equals( homeGenieUser.getPassword())) {
-				return ResponseEntity.ok(homeGenieUser);
+				return ResponseEntity.ok(storedHomeGenieUser);
 			}
 			else {
 				homeGenieUser.setValid(false);
