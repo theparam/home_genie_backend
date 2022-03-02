@@ -47,6 +47,7 @@ public class HomeGenieListingController {
 		return homeGenieListingService.create(homeGenieListings,file);
 
 	}
+	
 
 //	Updating the Listing
 	@PutMapping("/update/{id}")
@@ -75,11 +76,18 @@ public class HomeGenieListingController {
 
 		return homeGenieListingService.getListingById(id);
 	}
+	
+	//Get all listing
+	@GetMapping(value = "/")
+	public List<HomeGenieListings> getAllListing() {
+
+		return homeGenieListingService.getListings();
+	}
 
 //	this is the get listing who created it 
 //	will be used in View all listing
 	@GetMapping(value = "/listingByOwner/{ownerUserId}")
-	public HomeGenieListings getListingByOwnerId(@PathVariable("ownerUserId") String ownerUserId) {
+	public List<HomeGenieListings> getListingByOwnerId(@PathVariable("ownerUserId") String ownerUserId) {
 
 		return homeGenieListingService.getListingByOwnerId(ownerUserId);
 	}
@@ -90,6 +98,7 @@ public class HomeGenieListingController {
 
 		return homeGenieListingService.getListingByBidderId(bidderUserId);
 	}
+
 	
 //	Search all listing via specific category
 //	we need to use only one api depending a category is selected or not

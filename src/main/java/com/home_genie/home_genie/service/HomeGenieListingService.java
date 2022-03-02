@@ -26,13 +26,12 @@ public class HomeGenieListingService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
-	public ResponseEntity<?> create(HomeGenieListings listing,MultipartFile file) {
+	public ResponseEntity<?> create(HomeGenieListings listing, MultipartFile file) {
 		try {
 			listing.setImage(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
-		
 
-		homeGenieListingsRepository.save(listing);
-		return ResponseEntity.ok("{\"message\":\"List Added\"}");
+			homeGenieListingsRepository.save(listing);
+			return ResponseEntity.ok("{\"message\":\"List Added\"}");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,8 +58,8 @@ public class HomeGenieListingService {
 		Optional<HomeGenieListings> listing = homeGenieListingsRepository.findById(id);
 		HomeGenieListings fetchedListing = null;
 		if (listing.isPresent()) {
-			
-			fetchedListing =listing.get();
+
+			fetchedListing = listing.get();
 //			homeGenieValidUser.setEmail(homeGenieUser.getEmail());
 //			homeGenieValidUser.setLastName(homeGenieUser.getLastName());
 //			homeGenieValidUser.setFirstName(homeGenieUser.getFirstName());
@@ -69,19 +68,21 @@ public class HomeGenieListingService {
 		return fetchedListing;
 	}
 
-	public HomeGenieListings getListingByOwnerId(String id) {
+	public List<HomeGenieListings> getListingByOwnerId(String ownerUserId) {
 //		we have to get the listing by ownerId
-		Optional<HomeGenieListings> listing = homeGenieListingsRepository.findById(id);
-		HomeGenieListings fetchedListing = null;
-		if (listing.isPresent()) {
-			
-			fetchedListing =listing.get();
-//			homeGenieValidUser.setEmail(homeGenieUser.getEmail());
-//			homeGenieValidUser.setLastName(homeGenieUser.getLastName());
-//			homeGenieValidUser.setFirstName(homeGenieUser.getFirstName());
-//			updatedUser= homeGenieListingsRepository.save(homeGenieValidUser);	
-		}
-		return fetchedListing;
+
+		Query query = new Query();
+		if (!StringUtils.isEmpty(ownerUserId) && ownerUserId != null)
+			query.addCriteria(Criteria.where("ownerUserId").regex(ownerUserId, "i"));
+
+		List<HomeGenieListings> result = mongoTemplate.find(query, HomeGenieListings.class);
+
+		return result;
+	}
+
+	public List<HomeGenieListings> getListings() {
+		List<HomeGenieListings> results = homeGenieListingsRepository.findAll();
+		return results;
 	}
 
 	public HomeGenieListings getListingByBidderId(String id) {
@@ -89,8 +90,8 @@ public class HomeGenieListingService {
 		Optional<HomeGenieListings> listing = homeGenieListingsRepository.findById(id);
 		HomeGenieListings fetchedListing = null;
 		if (listing.isPresent()) {
-			
-			fetchedListing =listing.get();
+
+			fetchedListing = listing.get();
 //			homeGenieValidUser.setEmail(homeGenieUser.getEmail());
 //			homeGenieValidUser.setLastName(homeGenieUser.getLastName());
 //			homeGenieValidUser.setFirstName(homeGenieUser.getFirstName());
@@ -116,10 +117,10 @@ public class HomeGenieListingService {
 
 	public List<HomeGenieListings> searchListing(String title, String category) {
 		Query query = new Query();
-		if(!StringUtils.isEmpty(title)&& title!=null)
-		query.addCriteria(Criteria.where("title").regex(title,"i"));
-		if(!StringUtils.isEmpty(category) && category!=null)
-		query.addCriteria(Criteria.where("category").regex(category,"i"));
+		if (!StringUtils.isEmpty(title) && title != null)
+			query.addCriteria(Criteria.where("title").regex(title, "i"));
+		if (!StringUtils.isEmpty(category) && category != null)
+			query.addCriteria(Criteria.where("category").regex(category, "i"));
 //		
 //	
 //
