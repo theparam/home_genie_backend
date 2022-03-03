@@ -1,6 +1,7 @@
 package com.home_genie.home_genie.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
@@ -47,7 +48,9 @@ public class HomeGenieListings implements Serializable {
 
 	private String ownerUserId;
 
-	private String[] biddingOffers;
+	private List<String> biddingOffers;
+	
+	private String acceptedOfferId;
 
 	private String acceptedBiddingOffer;
 
@@ -177,11 +180,11 @@ public class HomeGenieListings implements Serializable {
 		this.ownerUserId = ownerUserId;
 	}
 
-	public String[] getBiddingOffers() {
+	public List<String> getBiddingOffers() {
 		return biddingOffers;
 	}
 
-	public void setBiddingOffers(String[] biddingOffers) {
+	public void setBiddingOffers(List<String> biddingOffers) {
 		this.biddingOffers = biddingOffers;
 	}
 
@@ -215,6 +218,14 @@ public class HomeGenieListings implements Serializable {
 
 	public void setCondition(String condition) {
 		this.condition = condition;
+	}
+
+	public String getAcceptedOfferId() {
+		return acceptedOfferId;
+	}
+
+	public void setAcceptedOfferId(String acceptedOfferId) {
+		this.acceptedOfferId = acceptedOfferId;
 	}
 
 }

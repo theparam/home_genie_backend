@@ -17,7 +17,7 @@ import com.home_genie.home_genie.model.BiddingOffer;
 import com.home_genie.home_genie.service.HomeGenieBidOfferService;
 
 @RestController
-@RequestMapping("/home/genie/user")
+@RequestMapping("/home/genie/user/bid/")
 public class HomeGenieBidOfferController {
 
 	@Autowired
@@ -27,6 +27,12 @@ public class HomeGenieBidOfferController {
 	public ResponseEntity<BiddingOffer> registerBiddingOffer(@RequestBody BiddingOffer biddingOffer) {
 
 		return homeGenieBiddingOfferService.register(biddingOffer);
+	}
+	
+	@PostMapping("/offer-update")
+	public ResponseEntity<BiddingOffer> updateBiddingOffer(@RequestBody BiddingOffer biddingOffer) {
+
+		return homeGenieBiddingOfferService.update(biddingOffer);
 	}
 
 }

@@ -23,6 +23,8 @@ public class BiddingOffer implements Serializable {
 	private String BidderUserId;
 
 	private String BiddingOffer;
+	
+	private String isOfferAccepted;
 
 	public String getListingId() {
 		return ListingId;
@@ -54,6 +56,14 @@ public class BiddingOffer implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String isOfferAccepted() {
+		return isOfferAccepted;
+	}
+
+	public void setOfferAccepted(String isOfferAccepted) {
+		this.isOfferAccepted = isOfferAccepted;
 	}
 
 }
