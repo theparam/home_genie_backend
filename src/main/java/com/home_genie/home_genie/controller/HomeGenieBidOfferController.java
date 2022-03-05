@@ -34,5 +34,5 @@ public class HomeGenieBidOfferController {
 
 		return homeGenieBiddingOfferService.update(biddingOffer);
 	}
-
+	
 }

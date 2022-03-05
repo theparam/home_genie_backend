@@ -18,36 +18,36 @@ public class BiddingOffer implements Serializable {
 	@Id
 	private String id;
 
-	private String ListingId;
+	private String listingId;
 
-	private String BidderUserId;
+	private String bidderUserId;
 
-	private String BiddingOffer;
+	private String biddingOffer;
 	
 	private String isOfferAccepted;
 
 	public String getListingId() {
-		return ListingId;
+		return listingId;
 	}
 
 	public void setListingId(String listingId) {
-		this.ListingId = listingId;
+		this.listingId = listingId;
 	}
 
 	public String getBidderUserId() {
-		return BidderUserId;
+		return bidderUserId;
 	}
 
 	public void setBidderUserId(String bidderUserId) {
-		this.BidderUserId = bidderUserId;
+		this.bidderUserId = bidderUserId;
 	}
 
 	public String getBiddingOffer() {
-		return BiddingOffer;
+		return biddingOffer;
 	}
 
 	public void setBiddingOffer(String bindingOffer) {
-		this.BiddingOffer = bindingOffer;
+		this.biddingOffer = bindingOffer;
 	}
 
 	public String getId() {
