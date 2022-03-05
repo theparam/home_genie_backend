@@ -59,17 +59,8 @@ public class HomeGenieBidOfferService {
 		Optional<HomeGenieListings> homeGenieListings = homeGenieListingRepository
 				.findById(biddingOffer.getListingId());
 
-		if (!Boolean.parseBoolean(biddingOffer.isOfferAccepted())) {
-			if (homeGenieListings.isPresent()) {
-				homeGenieListings.get().getBiddingOffers().remove(biddingOffer.getId());
-//				homeGenieListings.get().setBiddingOffers(homeGenieListings.get().getBiddingOffers());
-				homeGenieListingRepository.save(homeGenieListings.get());
-				homeGenieBiddingRepo.delete(biddingOffer);
 
-			}
-
-		} else {
-			if (homeGenieListings.isPresent()) {
+			if(homeGenieListings.isPresent()) {
 
 				homeGenieListings.get().setIsOfferAccepted(Boolean.TRUE);
 				homeGenieListings.get().setAcceptedBiddingOffer(biddingOffer.getId());
@@ -77,7 +68,21 @@ public class HomeGenieBidOfferService {
 
 				homeGenieListingRepository.save(homeGenieListings.get());
 			}
-		}
+			homeGenieListingRepository.save(homeGenieListings.get());
 		return ResponseEntity.ok(biddingOffer);
+	}
+
+	public ResponseEntity<BiddingOffer> decline(BiddingOffer biddingOffer) {
+		// TODO Auto-generated method stub
+		Optional<HomeGenieListings> homeGenieListings = homeGenieListingRepository.findById(biddingOffer.getListingId());
+		if (!Boolean.parseBoolean(biddingOffer.isOfferAccepted())) {
+			if(homeGenieListings.isPresent()) {
+				homeGenieListings.get().getBiddingOffers().remove(biddingOffer.getId());
+//				homeGenieListings.get().setBiddingOffers(homeGenieListings.get().getBiddingOffers());
+				homeGenieListingRepository.save(homeGenieListings.get());
+				homeGenieBiddingRepo.delete(biddingOffer);
+			}
+		}
+		return ResponseEntity.ok().build();
 	}
 }

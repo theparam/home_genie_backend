@@ -35,4 +35,10 @@ public class HomeGenieBidOfferController {
 		return homeGenieBiddingOfferService.update(biddingOffer);
 	}
 	
+	@PostMapping("/offer-decline")
+	public ResponseEntity<BiddingOffer> declineBiddingOffer(@RequestBody BiddingOffer biddingOffer) {
+
+		return homeGenieBiddingOfferService.decline(biddingOffer);
+	}
+
 }
