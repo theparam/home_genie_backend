@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.home_genie.home_genie.model.BiddingOffer;
+import com.home_genie.home_genie.model.HomeGenieListings;
 import com.home_genie.home_genie.service.HomeGenieBidOfferService;
 
 @RestController
@@ -39,6 +40,12 @@ public class HomeGenieBidOfferController {
 	public ResponseEntity<BiddingOffer> declineBiddingOffer(@RequestBody BiddingOffer biddingOffer) {
 
 		return homeGenieBiddingOfferService.decline(biddingOffer);
+	}
+	
+	@GetMapping(value = "/{id}")
+	public BiddingOffer getListingById(@PathVariable("id") String id) {
+
+		return homeGenieBiddingOfferService.getBiddingOfferById(id);
 	}
 
 }

@@ -6,7 +6,6 @@ import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
 @Document
 public class BiddingOffer implements Serializable {
 
@@ -22,8 +21,16 @@ public class BiddingOffer implements Serializable {
 
 	private String bidderUserId;
 
+	private String bidUserName;
+
+	private String bidUserEmail;
+
+	private String bidUserPhone;
+
+	private String bidUserBio;
+
 	private String biddingOffer;
-	
+
 	private String isOfferAccepted;
 
 	public String getListingId() {
@@ -40,6 +47,38 @@ public class BiddingOffer implements Serializable {
 
 	public void setBidderUserId(String bidderUserId) {
 		this.bidderUserId = bidderUserId;
+	}
+
+	public String getBidUserName() {
+		return bidUserName;
+	}
+
+	public void setBidUserName(String bidUserName) {
+		this.bidUserName = bidUserName;
+	}
+
+	public String getBidUserEmail() {
+		return bidUserEmail;
+	}
+
+	public void setBidUserEmail(String bidUserEmail) {
+		this.bidUserEmail = bidUserEmail;
+	}
+
+	public String getBidUserPhone() {
+		return bidUserPhone;
+	}
+
+	public void setBidUserPhone(String bidUserPhone) {
+		this.bidUserPhone = bidUserPhone;
+	}
+
+	public String getBidUserBio() {
+		return bidUserBio;
+	}
+
+	public void setBidUserBio(String bidUserBio) {
+		this.bidUserBio = bidUserBio;
 	}
 
 	public String getBiddingOffer() {

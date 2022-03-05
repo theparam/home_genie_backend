@@ -85,4 +85,16 @@ public class HomeGenieBidOfferService {
 		}
 		return ResponseEntity.ok().build();
 	}
+	
+	
+	public BiddingOffer getBiddingOfferById(String id){
+		Optional<BiddingOffer> biddingOffer = homeGenieBiddingRepo.findById(id);
+		BiddingOffer fetchedOffer = null;
+		if (biddingOffer.isPresent()) {
+
+			fetchedOffer = biddingOffer.get();
+		}
+		return fetchedOffer;
+		
+	}
 }
