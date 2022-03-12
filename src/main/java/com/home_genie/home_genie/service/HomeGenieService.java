@@ -45,15 +45,7 @@ public class HomeGenieService {
 	public ResponseEntity<HomeGenieUser> UpdateUser(String id, HomeGenieUser homeGenieUser) {
 		Optional<HomeGenieUser> User = homeGenieRepository.findById(id);
 		homeGenieUser.setId(id);
-//		HomeGenieUser updatedUser = new HomeGenieUser();
-//		if (User.isPresent()) {
-//			HomeGenieUser homeGenieValidUser = User.get();
-//			homeGenieValidUser.setEmail(homeGenieUser.getEmail());
-//			homeGenieValidUser.setLastName(homeGenieUser.getLastName());
-//			homeGenieValidUser.setFirstName(homeGenieUser.getFirstName());
-//			updatedUser =
-					homeGenieRepository.save(homeGenieUser);
-//		}
+		homeGenieRepository.save(homeGenieUser);
 		return ResponseEntity.ok(homeGenieUser);
 
 	}
@@ -69,6 +61,23 @@ public class HomeGenieService {
 			return null;
 	}
 
+	public ResponseEntity<HomeGenieUser> updateProfileImage(String id, MultipartFile userImage) {
+		// TODO Auto-generated method stub
+		Optional<HomeGenieUser> user = homeGenieRepository.findById(id);
+
+		try {
+
+			user.get().setImage(new Binary(BsonBinarySubType.BINARY, userImage.getBytes()));
+			homeGenieRepository.save(user.get());
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+//        photo = photoRepo.insert(photo); return photo.getId(););
+		return ResponseEntity.ok(user.get());
+	}
+	
 	public String uploadProfileImage(String id, MultipartFile userImage) {
 		// TODO Auto-generated method stub
 		try {

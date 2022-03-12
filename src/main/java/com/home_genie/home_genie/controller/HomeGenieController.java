@@ -36,6 +36,11 @@ public class HomeGenieController {
 	public String uploadProfileImage(@PathVariable(value = "id") String id,@RequestParam(value = "file",required = false) MultipartFile userImage) throws Exception {
 		return homeGenieService.uploadProfileImage(id,userImage);
 	}
+	
+	@PostMapping(value = "/update-image/{id}" )
+	public ResponseEntity<HomeGenieUser> updateProfileImage(@PathVariable(value = "id") String id,@RequestParam(value = "file",required = false) MultipartFile userImage) throws Exception {
+		return homeGenieService.updateProfileImage(id,userImage);
+	}
 
 	@PostMapping("/login")
 	public ResponseEntity<?> UserLogin(@RequestBody HomeGenieUser homeGenieUser) throws Exception {
