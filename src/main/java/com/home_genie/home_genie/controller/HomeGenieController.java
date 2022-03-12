@@ -1,6 +1,7 @@
 package com.home_genie.home_genie.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,14 +33,14 @@ public class HomeGenieController {
 		return homeGenieService.signUp(homeGenieUser);
 	}
 
-	@PostMapping(value = "/upload-image/{id}" )
-	public String uploadProfileImage(@PathVariable(value = "id") String id,@RequestParam(value = "file",required = false) MultipartFile userImage) throws Exception {
-		return homeGenieService.uploadProfileImage(id,userImage);
+	@PostMapping(value = "/upload-image/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+	public String uploadProfileImage(@PathVariable(value = "id") String id,@RequestParam(value = "file",required = false) MultipartFile file) throws Exception {
+		return homeGenieService.uploadProfileImage(id,file);
 	}
 	
-	@PostMapping(value = "/update-image/{id}" )
-	public ResponseEntity<HomeGenieUser> updateProfileImage(@PathVariable(value = "id") String id,@RequestParam(value = "file",required = false) MultipartFile userImage) throws Exception {
-		return homeGenieService.updateProfileImage(id,userImage);
+	@PostMapping(value = "/update-image/{id}",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}  )
+	public ResponseEntity<HomeGenieUser> updateProfileImage(@PathVariable(value = "id") String id,@RequestParam(value = "file",required = false) MultipartFile file) throws Exception {
+		return homeGenieService.updateProfileImage(id,file);
 	}
 
 	@PostMapping("/login")
