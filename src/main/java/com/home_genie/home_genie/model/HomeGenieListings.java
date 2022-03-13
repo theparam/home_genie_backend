@@ -56,7 +56,7 @@ public class HomeGenieListings implements Serializable {
 
 	private Boolean isOfferAccepted;
 
-	private Boolean isNotificationRead;
+	private String isNotificationRead;
 
 	public String getTitle() {
 		return title;
@@ -164,11 +164,11 @@ public class HomeGenieListings implements Serializable {
 		this.isOfferAccepted = isOfferAccepted;
 	}
 
-	public Boolean getIsNotificationRead() {
+	public String getIsNotificationRead() {
 		return isNotificationRead;
 	}
 
-	public void setIsNotificationRead(Boolean isNotificationRead) {
+	public void setIsNotificationRead(String isNotificationRead) {
 		this.isNotificationRead = isNotificationRead;
 	}
 

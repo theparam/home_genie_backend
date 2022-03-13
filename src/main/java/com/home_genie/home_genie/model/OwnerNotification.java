@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-public class Notifications implements Serializable {
+public class OwnerNotification implements Serializable {
 
 	/**
 	 * 
@@ -16,20 +16,20 @@ public class Notifications implements Serializable {
 	@Id
 	private String id;
 
-	private String userId;
+	private String bidOfferId;
 
 	private String listingId;
-
-	private String biddingId;
+	
+	private String ownerID;
 
 	private String status;
 
-	public String getUserId() {
-		return userId;
+	public String getOwnerID() {
+		return ownerID;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setOwnerID(String ownerID) {
+		this.ownerID = ownerID;
 	}
 
 	public String getListingId() {
@@ -40,13 +40,14 @@ public class Notifications implements Serializable {
 		this.listingId = listingId;
 	}
 
-	public String getBiddingId() {
-		return biddingId;
+	public String getbidOfferId() {
+		return bidOfferId;
 	}
 
-	public void setBiddingId(String biddingId) {
-		this.biddingId = biddingId;
+	public void setbidOfferId(String bidOfferId) {
+		this.bidOfferId = bidOfferId;
 	}
+
 
 	public String getStatus() {
 		return status;
