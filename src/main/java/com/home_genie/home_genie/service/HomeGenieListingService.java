@@ -29,7 +29,7 @@ public class HomeGenieListingService {
 	public ResponseEntity<?> create(HomeGenieListings listing, MultipartFile file) {
 		try {
 			listing.setImage(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
-
+			listing.setIsNotificationRead("unread");
 			homeGenieListingsRepository.save(listing);
 			return ResponseEntity.ok("{\"message\":\"List Added\"}");
 		} catch (IOException e) {

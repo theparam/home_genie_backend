@@ -15,9 +15,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.home_genie.home_genie.model.BiddingOffer;
+import com.home_genie.home_genie.model.CustomerNotification;
 import com.home_genie.home_genie.model.HomeGenieListings;
+import com.home_genie.home_genie.model.Notifications;
+import com.home_genie.home_genie.model.OwnerNotification;
+import com.home_genie.home_genie.repo.CustomerNotificationsRepo;
 import com.home_genie.home_genie.repo.HomeGenieBiddingRepo;
 import com.home_genie.home_genie.repo.HomeGenieListingRepository;
+import com.home_genie.home_genie.repo.OwnerNotificationsRepo;
 
 import net.minidev.json.JSONArray;
 
@@ -30,13 +35,20 @@ public class HomeGenieBidOfferService {
 	@Autowired
 	private HomeGenieListingRepository homeGenieListingRepository;
 
+	@Autowired
+	private com.home_genie.home_genie.repo.OwnerNotificationsRepo notificationsRepo;
+	
+	@Autowired
+	private CustomerNotificationsRepo customerNotificationsRepo;
+	
 	public ResponseEntity<BiddingOffer> register(BiddingOffer biddingOffer) {
 		
-		BiddingOffer biddingObj;
+		BiddingOffer biddingObj = new BiddingOffer();
 		
 		Optional<HomeGenieListings> homeGenieListings = homeGenieListingRepository
 				.findById(biddingOffer.getListingId());
 		System.out.println("homeGenieListings = " + homeGenieListings);
+		biddingObj.setIsNotificationRead("unread");
 		biddingObj = homeGenieBiddingRepo.save(biddingOffer);
 
 		System.out.println("val = " + biddingObj);
@@ -44,6 +56,17 @@ public class HomeGenieBidOfferService {
 		if (homeGenieListings.isPresent()) {
 			if (homeGenieListings.get().getBiddingOffers() == null) {
 				homeGenieListings.get().setBiddingOffers(new ArrayList<>());
+				OwnerNotification ownerNotification = new OwnerNotification();
+				CustomerNotification customerNotification = new CustomerNotification();
+				customerNotification.setCustomerId(biddingOffer.getBidderUserId());
+				customerNotification.setListingId(biddingObj.getListingId());
+				customerNotification.setStatus("unread");
+				customerNotificationsRepo.save(customerNotification);
+				ownerNotification.setOwnerID(homeGenieListings.get().getOwnerUserId());
+				ownerNotification.setListingId(biddingOffer.getListingId());
+				ownerNotification.setbidOfferId(biddingOffer.getId());
+				ownerNotification.setStatus("unread");
+				notificationsRepo.save(ownerNotification);	 
 			}
 			homeGenieListings.get().getBiddingOffers().add(biddingObj.getId());
 //				homeGenieListings.get().setBiddingOffers(homeGenieListings.get().getBiddingOffers());
@@ -65,7 +88,12 @@ public class HomeGenieBidOfferService {
 				homeGenieListings.get().setIsOfferAccepted(Boolean.TRUE);
 				homeGenieListings.get().setAcceptedBiddingOffer(biddingOffer.getId());
 				homeGenieBiddingRepo.save(biddingOffer);
-
+				OwnerNotification ownerNotification = new OwnerNotification();
+				ownerNotification.setbidOfferId(biddingOffer.getId());
+				ownerNotification.setOwnerID(homeGenieListings.get().getOwnerUserId());
+				ownerNotification.setListingId(biddingOffer.getListingId());
+				ownerNotification.setStatus("unread");
+				notificationsRepo.save(ownerNotification);
 				homeGenieListingRepository.save(homeGenieListings.get());
 			}
 			homeGenieListingRepository.save(homeGenieListings.get());

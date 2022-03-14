@@ -32,6 +32,8 @@ public class BiddingOffer implements Serializable {
 	private String biddingOffer;
 
 	private String isOfferAccepted;
+	
+	private String isNotificationRead;
 
 	public String getListingId() {
 		return listingId;
@@ -103,6 +105,14 @@ public class BiddingOffer implements Serializable {
 
 	public void setOfferAccepted(String isOfferAccepted) {
 		this.isOfferAccepted = isOfferAccepted;
+	}
+
+	public String getIsNotificationRead() {
+		return isNotificationRead;
+	}
+
+	public void setIsNotificationRead(String isNotificationRead) {
+		this.isNotificationRead = isNotificationRead;
 	}
 
 }

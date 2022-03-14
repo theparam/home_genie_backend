@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.home_genie.home_genie.model.CustomerNotification;
 import com.home_genie.home_genie.model.HomeGenieUser;
+import com.home_genie.home_genie.model.Notifications;
+import com.home_genie.home_genie.model.OwnerNotification;
 import com.home_genie.home_genie.service.HomeGenieService;
 
 @RestController
@@ -65,6 +68,16 @@ public class HomeGenieController {
 			throw new Exception("Email, FirstName, PassWord Phone Number should not be blank");
 		}
 		return homeGenieService.UpdateUser(id, homeGenieUser);
+	}
+	
+	@PostMapping(value = "/customer-notification/{id}")
+	public ResponseEntity<CustomerNotification> homeGenieCustomerNotification(@PathVariable(value = "id") String id,@RequestParam(value = "status") String status) throws Exception {
+		return homeGenieService.updateCustomerNotifications(id,status);
+	}
+	
+	@PostMapping(value = "/owner-notification/{id}")
+	public ResponseEntity<OwnerNotification> homeGenieOwnerNotification(@PathVariable(value = "id") String id,@RequestParam(value = "status") String status) throws Exception {
+		return homeGenieService.updateOwnerNotifications(id,status);
 	}
 
 }

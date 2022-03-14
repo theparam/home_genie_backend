@@ -10,14 +10,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.home_genie.home_genie.model.CustomerNotification;
 import com.home_genie.home_genie.model.HomeGenieUser;
+import com.home_genie.home_genie.model.Notifications;
+import com.home_genie.home_genie.model.OwnerNotification;
+import com.home_genie.home_genie.repo.CustomerNotificationsRepo;
 import com.home_genie.home_genie.repo.HomeGenieRepository;
+import com.home_genie.home_genie.repo.OwnerNotificationsRepo;
 
 @Service
 public class HomeGenieService {
 
 	@Autowired
 	private HomeGenieRepository homeGenieRepository;
+	
+	@Autowired
+	private CustomerNotificationsRepo customerNotificationsRepo;
+	
+	@Autowired
+	private OwnerNotificationsRepo ownerNotificationsRepo;
 
 	public ResponseEntity<HomeGenieUser> signUp(HomeGenieUser homeGenieUser) {
 	 	homeGenieUser = homeGenieRepository.save(homeGenieUser);
@@ -92,6 +103,20 @@ public class HomeGenieService {
 		} 
 //        photo = photoRepo.insert(photo); return photo.getId(););
 		return "Uploaded";
+	}
+
+	public ResponseEntity<CustomerNotification> updateCustomerNotifications(String id, String status) {
+		// TODO Auto-generated method stub
+		CustomerNotification customerNotification = customerNotificationsRepo.findById(id).get();
+		customerNotification.setStatus(status);
+		return ResponseEntity.ok(customerNotification);
+	}
+
+	public ResponseEntity<OwnerNotification> updateOwnerNotifications(String id, String status) {
+		// TODO Auto-generated method stub
+		OwnerNotification ownerNotification = ownerNotificationsRepo.findById(id).get();
+		ownerNotification.setStatus(status);
+		return ResponseEntity.ok(ownerNotification);
 	}
 
 }
