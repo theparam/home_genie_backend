@@ -1,16 +1,22 @@
 package com.home_genie.home_genie.service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.home_genie.home_genie.model.CustomerNotification;
+import com.home_genie.home_genie.model.HomeGenieListings;
 import com.home_genie.home_genie.model.HomeGenieUser;
 import com.home_genie.home_genie.model.Notifications;
 import com.home_genie.home_genie.model.OwnerNotification;
@@ -23,6 +29,8 @@ public class HomeGenieService {
 
 	@Autowired
 	private HomeGenieRepository homeGenieRepository;
+	@Autowired
+	private MongoTemplate mongoTemplate;
 	
 	@Autowired
 	private CustomerNotificationsRepo customerNotificationsRepo;
@@ -117,6 +125,28 @@ public class HomeGenieService {
 		OwnerNotification ownerNotification = ownerNotificationsRepo.findById(id).get();
 		ownerNotification.setStatus(status);
 		return ResponseEntity.ok(ownerNotification);
+	}
+	
+	public List<OwnerNotification> getOwnerNotifications(String ownerID)
+	{
+		Query query = new Query();
+		if (!StringUtils.isEmpty(ownerID) && ownerID != null)
+			query.addCriteria(Criteria.where("ownerID").regex(ownerID, "i"));
+
+		List<OwnerNotification> result = mongoTemplate.find(query, OwnerNotification.class);
+
+		return result;
+	}
+	
+	public List<CustomerNotification> getCustomerNotifications(String customerId)
+	{
+		Query query = new Query();
+		if (!StringUtils.isEmpty(customerId) && customerId != null)
+			query.addCriteria(Criteria.where("customerId").regex(customerId, "i"));
+
+		List<CustomerNotification> result = mongoTemplate.find(query, CustomerNotification.class);
+
+		return result;
 	}
 
 }

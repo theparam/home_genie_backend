@@ -1,5 +1,7 @@
 package com.home_genie.home_genie.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.home_genie.home_genie.model.CustomerNotification;
+import com.home_genie.home_genie.model.HomeGenieListings;
 import com.home_genie.home_genie.model.HomeGenieUser;
 import com.home_genie.home_genie.model.Notifications;
 import com.home_genie.home_genie.model.OwnerNotification;
@@ -68,6 +71,18 @@ public class HomeGenieController {
 			throw new Exception("Email, FirstName, PassWord Phone Number should not be blank");
 		}
 		return homeGenieService.UpdateUser(id, homeGenieUser);
+	}
+	
+	@GetMapping(value = "/getOwnerNotifications/{ownerID}")
+	public List<OwnerNotification> getNotificationByOwnerId(@PathVariable("ownerID") String ownerID) {
+
+		return homeGenieService.getOwnerNotifications(ownerID);
+	}
+	
+	@GetMapping(value = "/getCustomerNotifications/{customerId}")
+	public List<CustomerNotification> getNotificationByCustomerId(@PathVariable("customerId") String customerId) {
+
+		return homeGenieService.getCustomerNotifications(customerId);
 	}
 	
 	@PostMapping(value = "/customer-notification/{id}")
