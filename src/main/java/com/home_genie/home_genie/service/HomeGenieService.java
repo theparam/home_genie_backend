@@ -117,6 +117,7 @@ public class HomeGenieService {
 		// TODO Auto-generated method stub
 		CustomerNotification customerNotification = customerNotificationsRepo.findById(id).get();
 		customerNotification.setStatus(status);
+		customerNotificationsRepo.save(customerNotification);
 		return ResponseEntity.ok(customerNotification);
 	}
 
@@ -124,6 +125,7 @@ public class HomeGenieService {
 		// TODO Auto-generated method stub
 		OwnerNotification ownerNotification = ownerNotificationsRepo.findById(id).get();
 		ownerNotification.setStatus(status);
+		ownerNotificationsRepo.save(ownerNotification);
 		return ResponseEntity.ok(ownerNotification);
 	}
 	
