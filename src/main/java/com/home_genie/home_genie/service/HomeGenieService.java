@@ -126,6 +126,7 @@ public class HomeGenieService {
 		OwnerNotification ownerNotification = ownerNotificationsRepo.findById(id).get();
 		ownerNotification.setStatus(status);
 		ownerNotificationsRepo.save(ownerNotification);
+
 		return ResponseEntity.ok(ownerNotification);
 	}
 	
