@@ -130,6 +130,7 @@ public class HomeGenieService {
 		ownerNotification.setStatus(status);
 		ownerNotification.setPublishDate(LocalDateTime.now());
 		ownerNotificationsRepo.save(ownerNotification);
+
 		return ResponseEntity.ok(ownerNotification);
 	}
 	
