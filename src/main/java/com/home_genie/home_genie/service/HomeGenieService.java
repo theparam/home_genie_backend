@@ -1,6 +1,7 @@
 package com.home_genie.home_genie.service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -117,6 +118,8 @@ public class HomeGenieService {
 		// TODO Auto-generated method stub
 		CustomerNotification customerNotification = customerNotificationsRepo.findById(id).get();
 		customerNotification.setStatus(status);
+		customerNotification.setPublishDate(LocalDateTime.now());
+
 		customerNotificationsRepo.save(customerNotification);
 		return ResponseEntity.ok(customerNotification);
 	}
@@ -125,6 +128,7 @@ public class HomeGenieService {
 		// TODO Auto-generated method stub
 		OwnerNotification ownerNotification = ownerNotificationsRepo.findById(id).get();
 		ownerNotification.setStatus(status);
+		ownerNotification.setPublishDate(LocalDateTime.now());
 		ownerNotificationsRepo.save(ownerNotification);
 		return ResponseEntity.ok(ownerNotification);
 	}

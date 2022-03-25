@@ -1,6 +1,7 @@
 package com.home_genie.home_genie.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -23,6 +24,8 @@ public class OwnerNotification implements Serializable {
 	private String ownerID;
 
 	private String status;
+	
+	private LocalDateTime publishDate;
 
 	public String getOwnerID() {
 		return ownerID;
@@ -63,6 +66,14 @@ public class OwnerNotification implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public LocalDateTime getPublishDate() {
+		return publishDate;
+	}
+
+	public void setPublishDate(LocalDateTime publishDate) {
+		this.publishDate = publishDate;
 	}
 
 }
