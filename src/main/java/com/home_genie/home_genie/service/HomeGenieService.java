@@ -65,7 +65,9 @@ public class HomeGenieService {
 	public ResponseEntity<HomeGenieUser> UpdateUser(String id, HomeGenieUser homeGenieUser) {
 		Optional<HomeGenieUser> User = homeGenieRepository.findById(id);
 		homeGenieUser.setId(id);
-		
+		if (User.isPresent() && User.get().getImage() !=null) {
+			homeGenieUser.setImage(User.get().getImage());
+		}
 		homeGenieRepository.save(homeGenieUser);
 		return ResponseEntity.ok(homeGenieUser);
 
