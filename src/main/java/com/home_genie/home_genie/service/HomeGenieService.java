@@ -65,6 +65,7 @@ public class HomeGenieService {
 	public ResponseEntity<HomeGenieUser> UpdateUser(String id, HomeGenieUser homeGenieUser) {
 		Optional<HomeGenieUser> User = homeGenieRepository.findById(id);
 		homeGenieUser.setId(id);
+		
 		homeGenieRepository.save(homeGenieUser);
 		return ResponseEntity.ok(homeGenieUser);
 

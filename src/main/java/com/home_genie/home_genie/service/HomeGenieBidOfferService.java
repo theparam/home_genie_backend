@@ -1,6 +1,7 @@
 package com.home_genie.home_genie.service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,14 +38,14 @@ public class HomeGenieBidOfferService {
 
 	@Autowired
 	private com.home_genie.home_genie.repo.OwnerNotificationsRepo notificationsRepo;
-	
+
 	@Autowired
 	private CustomerNotificationsRepo customerNotificationsRepo;
-	
+
 	public ResponseEntity<BiddingOffer> register(BiddingOffer biddingOffer) {
-		
+
 		BiddingOffer biddingObj = new BiddingOffer();
-		
+
 		Optional<HomeGenieListings> homeGenieListings = homeGenieListingRepository
 				.findById(biddingOffer.getListingId());
 		System.out.println("homeGenieListings = " + homeGenieListings);
@@ -56,18 +57,20 @@ public class HomeGenieBidOfferService {
 		if (homeGenieListings.isPresent()) {
 			if (homeGenieListings.get().getBiddingOffers() == null) {
 				homeGenieListings.get().setBiddingOffers(new ArrayList<>());
-				OwnerNotification ownerNotification = new OwnerNotification();
-				CustomerNotification customerNotification = new CustomerNotification();
-				customerNotification.setCustomerId(biddingOffer.getBidderUserId());
-				customerNotification.setListingId(biddingObj.getListingId());
-				customerNotification.setStatus("unread");
-				customerNotificationsRepo.save(customerNotification);
-				ownerNotification.setOwnerID(homeGenieListings.get().getOwnerUserId());
-				ownerNotification.setListingId(biddingOffer.getListingId());
-				ownerNotification.setbidOfferId(biddingOffer.getId());
-				ownerNotification.setStatus("unread");
-				notificationsRepo.save(ownerNotification);	 
 			}
+			OwnerNotification ownerNotification = new OwnerNotification();
+			CustomerNotification customerNotification = new CustomerNotification();
+			customerNotification.setCustomerId(biddingOffer.getBidderUserId());
+			customerNotification.setListingId(biddingObj.getListingId());
+			customerNotification.setPublishDate(LocalDateTime.now());
+			customerNotification.setStatus("unread");
+			customerNotificationsRepo.save(customerNotification);
+			ownerNotification.setOwnerID(homeGenieListings.get().getOwnerUserId());
+			ownerNotification.setListingId(biddingOffer.getListingId());
+			ownerNotification.setbidOfferId(biddingOffer.getId());
+			ownerNotification.setPublishDate(LocalDateTime.now());
+			ownerNotification.setStatus("unread");
+			notificationsRepo.save(ownerNotification);
 			homeGenieListings.get().getBiddingOffers().add(biddingObj.getId());
 //				homeGenieListings.get().setBiddingOffers(homeGenieListings.get().getBiddingOffers());
 			homeGenieListingRepository.save(homeGenieListings.get());
@@ -82,29 +85,30 @@ public class HomeGenieBidOfferService {
 		Optional<HomeGenieListings> homeGenieListings = homeGenieListingRepository
 				.findById(biddingOffer.getListingId());
 
+		if (homeGenieListings.isPresent()) {
 
-			if(homeGenieListings.isPresent()) {
-
-				homeGenieListings.get().setIsOfferAccepted(Boolean.TRUE);
-				homeGenieListings.get().setAcceptedBiddingOffer(biddingOffer.getId());
-				homeGenieBiddingRepo.save(biddingOffer);
-				OwnerNotification ownerNotification = new OwnerNotification();
-				ownerNotification.setbidOfferId(biddingOffer.getId());
-				ownerNotification.setOwnerID(homeGenieListings.get().getOwnerUserId());
-				ownerNotification.setListingId(biddingOffer.getListingId());
-				ownerNotification.setStatus("unread");
-				notificationsRepo.save(ownerNotification);
-				homeGenieListingRepository.save(homeGenieListings.get());
-			}
+			homeGenieListings.get().setIsOfferAccepted(Boolean.TRUE);
+			homeGenieListings.get().setAcceptedBiddingOffer(biddingOffer.getId());
+			homeGenieBiddingRepo.save(biddingOffer);
+			OwnerNotification ownerNotification = new OwnerNotification();
+			ownerNotification.setbidOfferId(biddingOffer.getId());
+			ownerNotification.setOwnerID(homeGenieListings.get().getOwnerUserId());
+			ownerNotification.setListingId(biddingOffer.getListingId());
+			ownerNotification.setPublishDate(LocalDateTime.now());
+			ownerNotification.setStatus("unread");
+			notificationsRepo.save(ownerNotification);
 			homeGenieListingRepository.save(homeGenieListings.get());
+		}
+		homeGenieListingRepository.save(homeGenieListings.get());
 		return ResponseEntity.ok(biddingOffer);
 	}
 
 	public ResponseEntity<BiddingOffer> decline(BiddingOffer biddingOffer) {
 		// TODO Auto-generated method stub
-		Optional<HomeGenieListings> homeGenieListings = homeGenieListingRepository.findById(biddingOffer.getListingId());
+		Optional<HomeGenieListings> homeGenieListings = homeGenieListingRepository
+				.findById(biddingOffer.getListingId());
 		if (!Boolean.parseBoolean(biddingOffer.isOfferAccepted())) {
-			if(homeGenieListings.isPresent()) {
+			if (homeGenieListings.isPresent()) {
 				homeGenieListings.get().getBiddingOffers().remove(biddingOffer.getId());
 //				homeGenieListings.get().setBiddingOffers(homeGenieListings.get().getBiddingOffers());
 				homeGenieListingRepository.save(homeGenieListings.get());
@@ -113,9 +117,8 @@ public class HomeGenieBidOfferService {
 		}
 		return ResponseEntity.ok().build();
 	}
-	
-	
-	public BiddingOffer getBiddingOfferById(String id){
+
+	public BiddingOffer getBiddingOfferById(String id) {
 		Optional<BiddingOffer> biddingOffer = homeGenieBiddingRepo.findById(id);
 		BiddingOffer fetchedOffer = null;
 		if (biddingOffer.isPresent()) {
@@ -123,6 +126,6 @@ public class HomeGenieBidOfferService {
 			fetchedOffer = biddingOffer.get();
 		}
 		return fetchedOffer;
-		
+
 	}
 }
