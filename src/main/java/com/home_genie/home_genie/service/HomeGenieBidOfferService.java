@@ -90,13 +90,13 @@ public class HomeGenieBidOfferService {
 			homeGenieListings.get().setIsOfferAccepted(Boolean.TRUE);
 			homeGenieListings.get().setAcceptedBiddingOffer(biddingOffer.getId());
 			homeGenieBiddingRepo.save(biddingOffer);
-			OwnerNotification ownerNotification = new OwnerNotification();
-			ownerNotification.setbidOfferId(biddingOffer.getId());
-			ownerNotification.setOwnerID(homeGenieListings.get().getOwnerUserId());
-			ownerNotification.setListingId(biddingOffer.getListingId());
-			ownerNotification.setPublishDate(LocalDateTime.now());
-			ownerNotification.setStatus("unread");
-			notificationsRepo.save(ownerNotification);
+//			OwnerNotification ownerNotification = new OwnerNotification();
+//			ownerNotification.setbidOfferId(biddingOffer.getId());
+//			ownerNotification.setOwnerID(homeGenieListings.get().getOwnerUserId());
+//			ownerNotification.setListingId(biddingOffer.getListingId());
+//			ownerNotification.setPublishDate(LocalDateTime.now());
+//			ownerNotification.setStatus("unread");
+//			notificationsRepo.save(ownerNotification);
 			homeGenieListingRepository.save(homeGenieListings.get());
 		}
 		homeGenieListingRepository.save(homeGenieListings.get());
